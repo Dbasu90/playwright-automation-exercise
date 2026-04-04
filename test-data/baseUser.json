@@ -1,0 +1,13 @@
+{
+    "name": "Playwright TestUser",
+    "email": "PLACEHOLDER_EMAIL",
+    "password": "PLACEHOLDER_PASSWORD",
+    "firstName": "Playwright",
+    "lastName": "TestUser",
+    "address": "123 main Street",
+    "country": "India",
+    "state": "West Bengal",
+    "city": "Kolkata",
+    "zipcode": "700135",
+    "mobile": "9876543210"
+}
