@@ -35,13 +35,18 @@ export default defineConfig({
         /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
         trace: 'on-first-retry',
         testIdAttribute: 'data-qa',
+        screenshot: 'only-on-failure',
+        video: 'retain-on-failure',
     },
 
     /* Configure projects for major browsers */
     projects: [
+        { name: 'setup', testMatch: 'auth.setup.ts' },
         {
             name: 'chromium',
-            use: { ...devices['Desktop Chrome'] },
+            testIgnore: ['loginFLow.spec.ts', 'userRegistrationFlow.spec.ts'],
+            use: { ...devices['Desktop Chrome'], storageState: '.auth/userSession.json' },
+            dependencies: ['setup'],
         },
 
         {
