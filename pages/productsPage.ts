@@ -68,7 +68,12 @@ export class ProductsPage {
 
     async navigateToProductPage(): Promise<void> {
         await this.page.goto('/');
-        await Promise.all([this.navBar.clickOnProducts(), this.page.waitForURL('/products')]);
+        await Promise.all([
+            this.navBar.clickOnProducts(),
+            this.page.waitForURL((url) => url.href.includes('/products'), { timeout: 60000 })
+        ]);
+        // Wait for products to be loaded as additional stability check
+        await this.allProducts.waitFor({ state: 'visible', timeout: 30000 });
     }
 
     async getProductListCount(): Promise<number> {
