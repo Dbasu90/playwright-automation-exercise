@@ -1,7 +1,8 @@
 import { test, expect } from '../../fixtures/baseTest';
 import { ProductDetailsPage } from '../../pages/productDetailsPage';
 
-test.beforeEach(async ({ productsPage }) => {
+test.beforeEach(async ({ productsPage, page }) => {
+    await page.route('**/*google_vignette*', (route) => route.abort());
     await productsPage.navigateToProductPage();
 });
 
@@ -101,6 +102,26 @@ test.describe('Add Products to Cart', () => {
             const cartPage = await productDetails.clickOnViewCart();
             const productNames = await cartPage.cartDescription.allTextContents();
             expect(productNames).toEqual([productName, anotherProduct]);
+        });
+    });
+    test('Verify cart displays added products', async ({ cartPage, page, productsPage }) => {
+        await test.step('Verify product price, quantity and total', async () => {
+            await cartPage.navigateToCartPage();
+            if (await cartPage.emptyCart.isVisible()) {
+                productsPage.addProductToCart(productName);
+                productsPage.addProductToCart(anotherProduct);
+            }
+            const expectedTotal = await cartPage.getExpectedProductTotal(productName);
+            const actualTotal = (await cartPage.getProductTotal(productName).textContent())?.trim() || '';
+            expect(actualTotal).toEqual(`Rs. ${expectedTotal}`);
+        });
+        await test.step('Remove one of the product from the cart', async () => {
+            await cartPage.clickOnRemove(anotherProduct);
+        });
+        await test.step('Refresh and verify the cart is updated', async () => {
+            await page.reload();
+            const productNames = await cartPage.cartDescription.allTextContents();
+            expect(productNames).toEqual([productName]);
         });
     });
     test('Verfiy user can submit a review for a product', async ({ productsPage }) => {

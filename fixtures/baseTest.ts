@@ -5,6 +5,8 @@ import { LoginPage } from '../pages/loginPage';
 import { SignupPage } from '../pages/signupPage';
 import { ProductsPage } from '../pages/productsPage';
 import { ProductDetailsPage } from '../pages/productDetailsPage';
+import { CartPage } from '../pages/cartPage';
+import { CheckoutPage } from '../pages/checkoutPage';
 
 export type TestInfo = {
     userDetails: UserDetails;
@@ -12,6 +14,8 @@ export type TestInfo = {
     signupPage: SignupPage;
     productsPage: ProductsPage;
     productDetailsPage: ProductDetailsPage;
+    cartPage: CartPage;
+    checkoutPage: CheckoutPage;
 };
 
 export const test = base.extend<TestInfo>({
@@ -30,6 +34,12 @@ export const test = base.extend<TestInfo>({
     },
     productDetailsPage: async ({ page }, use) => {
         await use(new ProductDetailsPage(page));
+    },
+    cartPage: async ({ page }, use) => {
+        await use(new CartPage(page));
+    },
+    checkoutPage: async ({ page }, use) => {
+        await use(new CheckoutPage(page));
     },
 });
 

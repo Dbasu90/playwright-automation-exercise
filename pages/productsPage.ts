@@ -70,7 +70,7 @@ export class ProductsPage {
         await this.page.goto('/');
         await Promise.all([
             this.navBar.clickOnProducts(),
-            this.page.waitForURL((url) => url.href.includes('/products'), { timeout: 60000 })
+            this.page.waitForURL((url) => url.href.includes('/products'), { timeout: 60000 }),
         ]);
         // Wait for products to be loaded as additional stability check
         await this.allProducts.waitFor({ state: 'visible', timeout: 30000 });
@@ -131,5 +131,14 @@ export class ProductsPage {
     async filterByBrand(brand: string): Promise<void> {
         await this.brands.waitFor({ state: 'visible' });
         await this.selectBrandName(brand).click();
+    }
+
+    async addProductToCart(productName: string) {
+        await this.navigateToProductPage();
+        await this.hoverProduct(productName);
+        const productDetails: ProductDetailsPage = await this.openProduct(productName);
+        await productDetails.selectQuantity(2);
+        await productDetails.addToCart();
+        await productDetails.clickOnViewCart();
     }
 }
