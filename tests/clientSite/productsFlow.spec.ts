@@ -122,6 +122,7 @@ test.describe('Add Products to Cart', () => {
             await page.reload();
             const productNames = await cartPage.cartDescription.allTextContents();
             expect(productNames).toEqual([productName]);
+            await cartPage.clickOnRemove(productName);
         });
     });
     test('Verfiy user can submit a review for a product', async ({ productsPage }) => {

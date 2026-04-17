@@ -1,4 +1,5 @@
 import { Page, Locator } from '@playwright/test';
+import { UserDetails } from '../../types/userDetails';
 
 export class NavbarComponent {
     readonly page: Page;
@@ -7,6 +8,7 @@ export class NavbarComponent {
     readonly loginLink: Locator;
     readonly logoutLink: Locator;
     readonly loggedInUser: Locator;
+    readonly contactUs: Locator;
 
     constructor(page: Page) {
         this.page = page;
@@ -15,6 +17,7 @@ export class NavbarComponent {
         this.loginLink = page.locator('a[href="/login"]');
         this.logoutLink = page.locator('a[href="/logout"]');
         this.loggedInUser = page.locator('.fa-user');
+        this.contactUs = page.locator('a[href="/contact_us"]');
     }
 
     async clickOnCart() {
@@ -36,5 +39,21 @@ export class NavbarComponent {
         await this.loggedInUser.waitFor({ state: 'visible' });
         const userName = this.loggedInUser.locator('..').locator('b');
         return (await userName.textContent())?.trim() || '';
+    }
+
+    async submitContactUs(): Promise<Locator> {
+        await this.contactUs.click();
+        await this.page.getByTestId('name').fill(process.env.NAME!);
+        await this.page.getByTestId('email').fill(process.env.EMAIL!);
+        await this.page.getByTestId('subject').fill('This is a test subject');
+        await this.page.getByTestId('message').fill('This is a test message for contacting');
+        await this.page.locator('input[name="upload_file"]').setInputFiles('test-data/Mario.png');
+        await this.page.waitForLoadState('networkidle');
+        this.page.on('dialog', async (dialog) => {
+            console.log(dialog.message());
+            await dialog.accept();
+        });
+        await this.page.getByTestId('submit-button').click();
+        return this.page.locator('.status.alert-success');
     }
 }
