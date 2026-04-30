@@ -1,8 +1,7 @@
 import { test, expect } from '../../fixtures/baseTest';
 import { ProductDetailsPage } from '../../pages/productDetailsPage';
 
-test.beforeEach(async ({ productsPage, page }) => {
-    await page.route('**/*google_vignette*', (route) => route.abort());
+test.beforeEach(async ({ productsPage }) => {
     await productsPage.navigateToProductPage();
 });
 

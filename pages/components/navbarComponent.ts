@@ -47,8 +47,8 @@ export class NavbarComponent {
         await this.page.getByTestId('email').fill(process.env.EMAIL!);
         await this.page.getByTestId('subject').fill('This is a test subject');
         await this.page.getByTestId('message').fill('This is a test message for contacting');
-        await this.page.locator('input[name="upload_file"]').setInputFiles('test-data/Mario.png');
-        await this.page.waitForLoadState('networkidle');
+        await this.page.locator('input[name="upload_file"]').setInputFiles('test-data/invoice.txt');
+        await this.page.waitForLoadState('domcontentloaded');
         this.page.on('dialog', async (dialog) => {
             console.log(dialog.message());
             await dialog.accept();

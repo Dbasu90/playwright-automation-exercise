@@ -19,6 +19,13 @@ export type TestInfo = {
 };
 
 export const test = base.extend<TestInfo>({
+    page: async ({ page }, use) => {
+        const adPatterns = ['**/*google_vignette*', '**/*pagead2.googlesyndication.com/*', '**/*doubleclick.net/*'];
+        for (const pattern of adPatterns) {
+            await page.route(pattern, (route) => route.abort());
+        }
+        await use(page);
+    },
     userDetails: async ({}, use) => {
         const details = userDetailsFactory();
         await use(details);

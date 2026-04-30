@@ -54,8 +54,8 @@ export class LoginPage {
         await this.login.click();
     }
 
-    async isLoggedIn(): Promise<boolean> {
-        return await this.navBar.loggedInUser.isVisible();
+    getLoggedIn(): Locator {
+        return this.navBar.loggedInUser;
     }
 
     async getInvalidLoginError(): Promise<string> {

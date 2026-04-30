@@ -7,7 +7,7 @@ test.beforeEach(async ({ loginPage }) => {
 test.describe('Verify Login Flow', () => {
     test('Verify login with valid credentials', async ({ loginPage }) => {
         await loginPage.loginWithUsernameAndPassword(process.env.EMAIL!, process.env.PASSWORD!);
-        expect(await loginPage.isLoggedIn()).toBeTruthy();
+        await expect(loginPage.getLoggedIn()).toBeVisible();
         expect(await loginPage.navBar.getLoggedInUserName()).toEqual(process.env.NAME!);
     });
     test('Verify login with invalid password', async ({ loginPage, userDetails }) => {

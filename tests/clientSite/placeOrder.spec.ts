@@ -2,9 +2,9 @@ import { test, expect } from '../../fixtures/baseTest';
 import { CardInfo } from '../../types/cardInfo';
 import cardDetails from '../../test-data/cardDetails.json';
 import { CheckoutPage } from '../../pages/checkoutPage';
+import fs from 'fs';
 
-test.beforeEach(async ({ cartPage, page }) => {
-    await page.route('**/*google_vignette*', (route) => route.abort());
+test.beforeEach(async ({ cartPage }) => {
     await cartPage.navigateToCartPage();
 });
 
@@ -37,6 +37,11 @@ test('Verify order summary on checkout and place order', async ({ cartPage, user
     await test.step('Verify order has been placed', async () => {
         const confirmation = await checkout.getOrderConfirmation();
         expect(confirmation).toEqual('Congratulations! Your order has been confirmed!');
+    });
+    await test.step('Download the invoice and verify content', async () => {
+        await checkout.downloadInvoice();
+        const fileContent = fs.readFileSync('./invoice.txt', 'utf-8');
+        expect(fileContent).toContain('Your total purchase amount is');
     });
 });
 

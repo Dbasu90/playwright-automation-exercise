@@ -19,7 +19,7 @@ export class CheckoutPage {
     readonly expYear: Locator;
     readonly payAndConfirm: Locator;
     readonly orderConfirmation: Locator;
-    readonly downloadInvoice: Locator;
+    readonly downloadInvoiceBtn: Locator;
 
     constructor(page: Page) {
         this.page = page;
@@ -37,7 +37,7 @@ export class CheckoutPage {
         this.expYear = page.getByTestId('expiry-year');
         this.payAndConfirm = page.getByRole('button', { name: 'Pay and Confirm Order' });
         this.orderConfirmation = page.locator('[data-qa="order-placed"]').locator('+ p');
-        this.downloadInvoice = page.getByRole('link', { name: 'Download Invoice' });
+        this.downloadInvoiceBtn = page.getByRole('link', { name: 'Download Invoice' });
     }
 
     async getDeliveryAddress(): Promise<string> {
@@ -81,5 +81,10 @@ export class CheckoutPage {
 
     async getOrderConfirmation(): Promise<string> {
         return (await this.orderConfirmation.textContent())?.trim() || '';
+    }
+
+    async downloadInvoice(): Promise<void> {
+        const [download] = await Promise.all([this.page.waitForEvent('download'), this.downloadInvoiceBtn.click()]);
+        await download.saveAs(download.suggestedFilename());
     }
 }
