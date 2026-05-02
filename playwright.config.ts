@@ -43,10 +43,18 @@ export default defineConfig({
     /* Configure projects for major browsers */
     projects: [
         { name: 'setup', testMatch: 'auth.setup.ts' },
-        { name: 'registration', testMatch: 'userRegistrationFlow.spec.ts', use: { ...devices['Desktop Chrome'] } },
+
         { name: 'api', testMatch: 'apiTest.spec.ts' },
+
+        {
+            name: 'registration',
+            testMatch: ['userRegistrationFlow.spec.ts', 'loginFlow.spec.ts'],
+            use: { ...devices['Desktop Chrome'] },
+        },
+
         {
             name: 'chromium',
+            testDir: './tests/clientSite',
             testIgnore: ['loginFLow.spec.ts', 'userRegistrationFlow.spec.ts'],
             use: { ...devices['Desktop Chrome'], storageState: '.auth/userSession.json' },
             dependencies: ['setup'],
