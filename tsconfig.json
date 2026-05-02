@@ -13,5 +13,6 @@
         "skipLibCheck": true, // Skip type checking of dependencies
         "outDir": "dist" // Compiled output folder
     },
-    "exclude": ["node_modules", "dist"] // Ignore build + dependencies
+    "exclude": ["node_modules", "dist"],
+    "include": ["tests", "fixtures", "types/matchers.d.ts"]
 }

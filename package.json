@@ -25,7 +25,9 @@
         "eslint-config-prettier": "^10.1.8",
         "eslint-plugin-playwright": "^2.10.2",
         "husky": "^9.1.7",
-        "prettier": "^3.8.1"
+        "playwright-schema-validator": "^1.0.0",
+        "prettier": "^3.8.1",
+        "zod": "^4.4.2"
     },
     "dependencies": {
         "@faker-js/faker": "^10.4.0",
