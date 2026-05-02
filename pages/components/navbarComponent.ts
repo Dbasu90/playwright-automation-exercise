@@ -1,5 +1,4 @@
 import { Page, Locator } from '@playwright/test';
-import { UserDetails } from '../../types/userDetails';
 
 export class NavbarComponent {
     readonly page: Page;

@@ -1,11 +1,11 @@
 {
     "compilerOptions": {
         "target": "ES2020", // Modern JS output
-        "module": "commonjs", // Node-compatible module system
+        "module": "esnext", // Node-compatible module system
+        "moduleResolution": "bundler", // Modern module resolution strategy
         "lib": ["ES2020"], // Include modern JS features
         "types": ["node", "playwright"], // Add Node + Playwright type definitions
         "esModuleInterop": true, // Allow default imports from CommonJS
-        "moduleResolution": "bundler", // Modern module resolution strategy
         "resolveJsonModule": true, // Import JSON files directly
         "allowJs": false, // Keep project strictly TypeScript
         "strict": true, // Enable all strict type checks

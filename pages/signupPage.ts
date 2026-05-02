@@ -17,6 +17,7 @@ export class SignupPage {
     readonly createAccount: Locator;
     readonly confirmation: Locator;
     readonly continue: Locator;
+    readonly successMsg: Locator;
 
     constructor(page: Page) {
         this.page = page;
@@ -34,6 +35,7 @@ export class SignupPage {
         this.createAccount = page.getByRole('button', { name: 'Create Account' });
         this.confirmation = page.locator('.title b');
         this.continue = page.getByRole('link', { name: 'Continue' });
+        this.successMsg = page.getByText('Congratulations! Your new account has been successfully created!');
     }
 
     async registerUserWithMandatoryDetails(userDetails: UserDetails): Promise<void> {
@@ -46,10 +48,7 @@ export class SignupPage {
         await this.city.fill(userDetails.city);
         await this.zipcode.fill(userDetails.zipcode);
         await this.mobile.fill(userDetails.mobile);
-        await Promise.all([
-            this.createAccount.click(),
-            this.page.waitForSelector("//p[text()='Congratulations! Your new account has been successfully created!']"),
-        ]);
+        await Promise.all([this.createAccount.click(), this.successMsg.waitFor({ state: 'visible' })]);
     }
 
     async continueToHomePage() {

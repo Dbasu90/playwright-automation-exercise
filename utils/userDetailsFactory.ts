@@ -1,4 +1,4 @@
-import baseUser from '../test-data/baseUser.json';
+import baseUser from '../test-data/baseUser.json' with { type: 'json' };
 import { UserDetails } from '../types/userDetails';
 import { faker } from '@faker-js/faker';
 

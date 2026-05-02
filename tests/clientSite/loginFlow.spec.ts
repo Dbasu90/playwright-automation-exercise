@@ -10,6 +10,7 @@ test.describe('Verify Login Flow', () => {
         await expect(loginPage.getLoggedIn()).toBeVisible();
         expect(await loginPage.navBar.getLoggedInUserName()).toEqual(process.env.NAME!);
     });
+
     test('Verify login with invalid password', async ({ loginPage, userDetails }) => {
         await loginPage.loginWithUsernameAndPassword(userDetails.email, 'pass123');
         const errorMsg = await loginPage.getInvalidLoginError();

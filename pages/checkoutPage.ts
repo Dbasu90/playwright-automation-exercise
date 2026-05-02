@@ -1,6 +1,5 @@
 import { Page, Locator } from '@playwright/test';
 import { CardInfo } from '../types/cardInfo';
-import { NavbarComponent } from './components/navbarComponent';
 import { CartPage } from './cartPage';
 
 export class CheckoutPage {
